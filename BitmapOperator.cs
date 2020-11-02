@@ -92,8 +92,8 @@ namespace Wielokaty
         }
         public void DrawPoint(Point A, int size, Color color)
         {
-            for (int y = A.Y - size; y < A.Y + size; ++y)
-                for (int x = A.X - size; x < A.X + size; ++x)
+            for (int y = A.Y - size; y <= A.Y + size; ++y)
+                for (int x = A.X - size; x <= A.X + size; ++x)
                     SetPixel(x, y, color);
         }
         private void BresenhamAlgorithm(Point zero, Point diff, byte state, Color color)
@@ -169,7 +169,7 @@ namespace Wielokaty
 
         //double buffer?
         private DirectBitmap bitmap;
-        private List<Triangle> triangles = new List<Triangle>();
+        private List<TriangleMesh> meshes = new List<TriangleMesh>();
         private Stopwatch lastRefresh;
         
         public Color BackgroundColor { get; private set; } = Color.White;
@@ -190,7 +190,7 @@ namespace Wielokaty
             lastRefresh.Restart();
 
             bitmap.Clear(BackgroundColor);
-            foreach (Triangle obj in triangles)
+            foreach (TriangleMesh obj in meshes)
                     obj.Draw(bitmap);
         }
 
@@ -268,22 +268,22 @@ namespace Wielokaty
 
 
         #region Drawable queries
-        public bool RegisterTriangle(Triangle obj)
+        public bool RegisterTriangleMesh(TriangleMesh obj)
         {
-            if (triangles.Contains(obj))
+            if (meshes.Contains(obj))
                 return false;
-            triangles.Add(obj);
+            meshes.Add(obj);
             return true;
         }
-        public bool UnregisterDrawable(Triangle obj)
+        public bool UnregisterTriangleMesh(TriangleMesh obj)
         {
-            return triangles.Remove(obj);
+            return meshes.Remove(obj);
         }
 
         public ReferencePoint GetClickedOnPoint(Point p)
         {
-            foreach (Triangle trian in triangles)
-                if (trian.Collides(p, out ReferencePoint point))
+            foreach (TriangleMesh mesh in meshes)
+                if (mesh.Collides(p, out ReferencePoint point))
                     return point;
             return null;
         }
