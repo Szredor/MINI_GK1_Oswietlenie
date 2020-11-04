@@ -9,29 +9,35 @@ namespace Oswietlenie.Geometric
     class TriangleMesh: IDisposable
     {
         private ReferencePoint[,] mesh;
-        private int PointHeight;
-        private int PointWidth;
-        private int Height;
-        private int Width;
-        private Point Position;
+        private Triangle[] triangles;
+        private int rows;
+        private int cols;
 
         public TriangleMesh(Point position, int width, int height, int pointsHeight, int pointsWidth)
         {
-            Position = position;
-            PointWidth = pointsWidth;
-            PointHeight = pointsHeight;
-            Width = width;
-            Height = height;
-            mesh = new ReferencePoint[PointHeight, PointWidth];
+            cols = pointsWidth;
+            rows = pointsHeight;
+            mesh = new ReferencePoint[rows, cols];
 
-            int dx = width / (PointWidth - 1);
-            int dy = height / (PointHeight - 1);
-            for (int row = 0; row < PointHeight; ++row)
+            int dx = width / (cols - 1);
+            int dy = height / (rows - 1);
+            for (int row = 0; row < rows; ++row)
             {
-                for (int col = 0; col < PointWidth; ++col)
-                    mesh[row, col] = new ReferencePoint(Position.X + col * dx, Position.Y + row * dy);
+                for (int col = 0; col < cols; ++col)
+                    mesh[row, col] = new ReferencePoint(position.X + col * dx, position.Y + row * dy);
             }
 
+            List<Triangle> ts = new List<Triangle>();
+            for (int row = 0; row < rows - 1; ++row)
+            {
+                for (int col = 0; col < cols - 1; ++col)
+                {
+                    ts.Add(new Triangle(mesh[row, col], mesh[row + 1, col], mesh[row, col + 1]));
+                    ts.Add(new Triangle(mesh[row + 1, col + 1], mesh[row + 1, col], mesh[row, col + 1]));
+                }
+            }
+
+            triangles = ts.ToArray();
             BitmapOperator.Instance.RegisterTriangleMesh(this);
         }
 
@@ -42,33 +48,39 @@ namespace Oswietlenie.Geometric
 
         public void Draw(DirectBitmap bitmap)
         {
-            for (int row = 0; row < PointHeight - 1; ++row)
+            for (int row = 0; row < rows - 1; ++row)
             {
-                for (int col = 0; col < PointWidth - 1; ++col)
+                for (int col = 0; col < cols - 1; ++col)
                 {
                     bitmap.DrawLine(mesh[row, col], mesh[row, col + 1]);
                     bitmap.DrawLine(mesh[row, col], mesh[row + 1, col]);
-                    bitmap.DrawLine(mesh[row, col], mesh[row + 1, col + 1]);
+                    bitmap.DrawLine(mesh[row+1, col], mesh[row, col + 1]);
                 }
             }
 
-            for (int row = 0; row < PointHeight - 1; ++row)
-                bitmap.DrawLine(mesh[row, PointWidth - 1], mesh[row + 1, PointWidth - 1]);
-            for (int col = 0; col < PointWidth - 1; ++col)
-                bitmap.DrawLine(mesh[PointHeight - 1, col], mesh[PointHeight - 1, col + 1]);
+            for (int row = 0; row < rows - 1; ++row)
+                bitmap.DrawLine(mesh[row, cols - 1], mesh[row + 1, cols - 1]);
+            for (int col = 0; col < cols - 1; ++col)
+                bitmap.DrawLine(mesh[rows - 1, col], mesh[rows - 1, col + 1]);
 
-            for (int row = 0; row < PointHeight; ++row)
+            for (int row = 0; row < rows; ++row)
             {
-                for (int col = 0; col < PointWidth; ++col)
+                for (int col = 0; col < cols; ++col)
                     mesh[row, col].Draw(bitmap);
             }
         }
 
+        public void Fill(DirectBitmap bitmap, ColourModel model)
+        {
+            foreach (Triangle trian in triangles)
+                trian.Fill(bitmap, model);
+        }
+
         public bool Collides(Point p, out ReferencePoint point)
         {
-            for (int row = 0; row < PointHeight; ++row)
+            for (int row = 0; row < rows; ++row)
             {
-                for (int col = 0; col < PointWidth; ++col)
+                for (int col = 0; col < cols; ++col)
                     if (mesh[row, col].Collide(p))
                     {
                         point = mesh[row, col];

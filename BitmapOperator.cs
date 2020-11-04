@@ -1,9 +1,11 @@
-﻿using Oswietlenie.Geometric;
+﻿using Oswietlenie;
+using Oswietlenie.Geometric;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 
@@ -145,6 +147,127 @@ namespace Wielokaty
         }
     }
 
+    class ActiveLineList
+    {
+
+        private List<ActiveLine> AET;
+        private int nowMinYmax;
+        public int MinYMax => AET.Count() == 0 ? int.MinValue : AET.Min(aet => aet.ymax);
+        private int[] pointIds;
+        private ReferencePoint[] points;
+        private int y;
+        private int pointIdx;
+
+        public ActiveLineList(IEnumerable<ReferencePoint> points)
+        {
+            this.points = points.ToArray();
+            (int, ReferencePoint)[] tempArr = new (int, ReferencePoint)[this.points.Length];
+            for (int i = 0; i < this.points.Length; ++i)
+                tempArr[i] = (i, this.points[i]);
+            Array.Sort(tempArr, (p1, p2) => (int)(p1.Item2.Position.Y - p2.Item2.Position.Y));
+            this.pointIds = tempArr.Select(p => p.Item1).ToArray();
+            AET = new List<ActiveLine>();
+
+            InitializeAET();
+        }
+
+        private void Insert(ActiveLine line)
+        {
+            int greater = AET.FindIndex(l => l.X > line.X);
+            if (greater < 0)
+            {
+                greater = AET.FindIndex(l => l.X == line.X && l.dx > line.dx);
+                if (greater >= 0)
+                    AET.Insert(greater, line);
+                else
+                    AET.Add(line);
+            }
+            else
+                AET.Insert(greater, line);
+        }
+
+        private void ValidatePoint()
+        {
+            //Usunięcię punktów o końcach poniżej aktualnego y
+            List<ActiveLine> toDelete = new List<ActiveLine>();
+            foreach (ActiveLine l in AET)
+                if (l.ymax <= y)
+                    toDelete.Add(l);
+            foreach (ActiveLine del in toDelete)
+                AET.Remove(del);
+
+            //Do czasu gdy punkty są na aktualnej scanlinii probuj od nich dodawac krawędzie
+            for (; pointIdx < points.Length && points[pointIds[pointIdx]].Position.Y == y; pointIdx++)
+            {
+                int pointId = pointIds[pointIdx];
+                int prevId = pointIdx == 0 ? pointIds[points.Length - 1] : pointIds[pointIdx - 1];
+                int nextId = pointIdx == points.Length - 1 ? pointIds[0] : pointIds[pointIdx + 1];
+
+                ReferencePoint prev = points[prevId];
+                ReferencePoint next = points[nextId];
+                ReferencePoint point = points[pointId];
+
+                //jezeli drugi koniec linii będzie powyżej scanlinii, to dodaj do aktywnych linii
+                if (prev.Position.Y > y)
+                    Insert(new ActiveLine(point, prev));
+                if (next.Position.Y > y)
+                    Insert(new ActiveLine(point, next));
+            }
+
+            nowMinYmax = MinYMax;
+        }
+
+        private void InitializeAET()
+        {
+            y = (int)points[pointIds[0]].Position.Y;
+            pointIdx = 0;
+            ValidatePoint();
+        }
+
+        public bool Increment()
+        {
+            if (AET.Count() == 0)
+                return false;
+
+            if (nowMinYmax == y)
+            {
+                ValidatePoint();
+                return true;
+            }
+            foreach (ActiveLine line in AET)
+                line.Increment();
+            ++y;
+            return true;
+        }
+
+        public List<Point> GetPointsOnScanLine()
+        {
+            return AET.Select(aet => new Point(aet.X, y)).ToList();
+        }
+    }
+    class ActiveLine
+    {
+        public readonly int ymax;
+        private double x;
+        public int X => (int)Math.Floor(x);
+        public double dx;
+
+        public void Increment()
+        {
+            x = x + dx;
+        }
+
+        public ActiveLine(ReferencePoint one, ReferencePoint two)
+        {
+            ymax = (int)two.Position.Y;
+            x = one.Position.X;
+            if (Math.Floor(one.Position.X) == Math.Floor(two.Position.X))
+                dx = 0;
+            else
+                dx = (two.Position.X - one.Position.X) / (two.Position.Y - one.Position.Y);
+        }
+    }
+
     class BitmapOperator
     {
         private static BitmapOperator instance = null;
@@ -168,12 +291,14 @@ namespace Wielokaty
         public const double CollideMargin = 5;
 
         //double buffer?
-        private DirectBitmap bitmap;
+        public DirectBitmap bitmap;
         private List<TriangleMesh> meshes = new List<TriangleMesh>();
         private Stopwatch lastRefresh;
         
         public Color BackgroundColor { get; private set; } = Color.White;
         public Bitmap Bitmap => bitmap.Bitmap;
+
+        private ColourModel colourModel = new ColourModel();
 
         private BitmapOperator()
         {
@@ -191,24 +316,16 @@ namespace Wielokaty
 
             bitmap.Clear(BackgroundColor);
             foreach (TriangleMesh obj in meshes)
-                    obj.Draw(bitmap);
+            {
+                obj.Fill(bitmap, colourModel);
+                obj.Draw(bitmap);
+            }
         }
 
         public Bitmap NewBitmap(int x, int y)
         {
             bitmap = new DirectBitmap(x, y);
             return Bitmap;
-        }
-
-        public bool IsPointOutside(Point p)
-        {
-            if (p.X >= bitmap.Width)
-                return true;
-
-            if (p.Y >= bitmap.Height)
-                return true;
-
-            return false;
         }
 
         public double Distance(Point A, Point B)

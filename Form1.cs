@@ -6,6 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +21,16 @@ namespace Oswietlenie
 
         private void TestBitmap()
         {
-            var test = new TriangleMesh(new Point(100, 100), 200, 300, 6, 9);
+            var test = new TriangleMesh(new Point(100, 100), 700, 500, 6, 9);
+            /*ReferencePoint p1 = new ReferencePoint(200, 150);
+            ReferencePoint p2 = new ReferencePoint(100, 200);
+            ReferencePoint p3 = new ReferencePoint(150, 300);
+            Triangle t = new Triangle(p3, p1, p2);
+            ColourModel model = new ColourModel();
+            model.ColourObject = Color.Red;
+
+            BitmapOperator.Instance.bitmap.Clear(Color.Gray);
+            t.Fill(BitmapOperator.Instance.bitmap, model);*/
         }
 
         public Form1()
@@ -43,15 +53,18 @@ namespace Oswietlenie
             ReferencePoint p = BitmapOperator.Instance.GetClickedOnPoint(e.Location);
             if (p != null)
             {
-                Point offset = p.Position.Substract(e.Location);
+                Point offset = ((Point)p).Substract(e.Location);
                 mover = new PointMover(offset, p);
             }
         }
 
         private void pictureBoxSchemat_MouseMove(object sender, MouseEventArgs e)
         {
-            mover?.MakeMove(e.Location);
-            UpdateBitmap();
+            if (mover != null)
+            {
+                mover.MakeMove(e.Location);
+                UpdateBitmap();
+            }
         }
 
         private void pictureBoxSchemat_MouseUp(object sender, MouseEventArgs e)
@@ -88,7 +101,8 @@ namespace Oswietlenie
                 return;
             waitMove.Restart();
 
-            clicked.Position = mousePos.Add(moveOffset);
+            Point newPos = mousePos.Add(moveOffset);
+            clicked.Position = new Vector3(newPos.X, newPos.Y, 0);
         }
     }
 }
