@@ -1,4 +1,5 @@
-﻿using Oswietlenie.Geometric;
+﻿using Oswietlenie.ColourConfiguration;
+using Oswietlenie.Geometric;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,15 +23,15 @@ namespace Oswietlenie
         private void TestBitmap()
         {
             var test = new TriangleMesh(new Point(100, 100), 700, 500, 6, 9);
-            /*ReferencePoint p1 = new ReferencePoint(200, 150);
-            ReferencePoint p2 = new ReferencePoint(100, 200);
-            ReferencePoint p3 = new ReferencePoint(150, 300);
-            Triangle t = new Triangle(p3, p1, p2);
-            ColourModel model = new ColourModel();
-            model.ColourObject = Color.Red;
 
-            BitmapOperator.Instance.bitmap.Clear(Color.Gray);
-            t.Fill(BitmapOperator.Instance.bitmap, model);*/
+            BitmapOperator.Instance.colourModel.kd = 0.5;
+            BitmapOperator.Instance.colourModel.ks = 0.5;
+            BitmapOperator.Instance.colourModel.m = 5;
+            BitmapOperator.Instance.colourModel.LightVector = new StaticLightVector(new Vector3(0, 0, 1));
+            BitmapOperator.Instance.colourModel.LigthColour = new LightColour(Color.White);
+            BitmapOperator.Instance.colourModel.NormalMap = new StaticNormalMap(new Vector3(0, 0, 1));
+            BitmapOperator.Instance.colourModel.ColourMethod = new AcurateLambertMethod();
+            BitmapOperator.Instance.colourModel.ColourObject = new SolidColor(Color.Red);
         }
 
         public Form1()

@@ -286,7 +286,7 @@ namespace Wielokaty
 
         private const int defaultX = 500;
         private const int defaultY = 500;
-        public const int refreshTimeMs = 50;
+        public const int refreshTimeMs = 100;
 
         public const double CollideMargin = 5;
 
@@ -298,7 +298,7 @@ namespace Wielokaty
         public Color BackgroundColor { get; private set; } = Color.White;
         public Bitmap Bitmap => bitmap.Bitmap;
 
-        private ColourModel colourModel = new ColourModel();
+        public ColourModel colourModel = new ColourModel();
 
         private BitmapOperator()
         {

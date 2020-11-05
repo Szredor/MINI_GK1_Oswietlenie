@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.Threading.Tasks;
 using Wielokaty;
 
 namespace Oswietlenie.Geometric
@@ -72,6 +73,7 @@ namespace Oswietlenie.Geometric
 
         public void Fill(DirectBitmap bitmap, ColourModel model)
         {
+            //Parallel.ForEach(triangles, (trian) => trian.Fill(bitmap, model));
             foreach (Triangle trian in triangles)
                 trian.Fill(bitmap, model);
         }
