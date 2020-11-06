@@ -1,11 +1,9 @@
-﻿using Oswietlenie.Geometric;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Text;
-using Wielokaty;
+using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Factorization;
 
 namespace Oswietlenie.ColourConfiguration
 {
@@ -74,22 +72,36 @@ namespace Oswietlenie.ColourConfiguration
 
     public class InterpolateLambertMethod
     {
-        //Przechowywanie L z rozkładu LU
+        private Vector3 bar;
         private Vector3 row1;
         private Vector3 row2;
         private Vector3 row3;
         private float l21;
         private float l31;
         private float l32;
-        private Vector3 bar;
         Point[] points = new Point[3];
         Color[] colorPoints = new Color[3];
-        float wholeArea;
+        /*float detA;
+        float detPart1A;
+        float detPart2A;
+        float detPart3A;*/
 
+        /*private void CalculateBaricentric(Point p)
+        {
+            //Wyliczenie wzorami cramera
+            float p1 = points[0].X * p.Y - p.X * points[0].Y;
+            float p2 = points[1].X * p.Y - p.X * points[1].Y;
+            float p3 = points[2].X * p.Y - p.X * points[2].Y;
+
+            //Debug.Assert(detA == 0);
+
+            bar.X = (detPart1A - p3 + p2) / detA;
+            bar.Y = (p3 - detPart2A + p1) / detA;
+            bar.Z = (p2 - p1 + detPart3A) / detA;
+        }*/
 
         private void CalculateBaricentric(Point p)
-        {
-            //Rozwiazanie ukladu rownan z rozkladu LU
+        { 
             bar.X = p.X;
             bar.Y = p.Y - l21 * p.X;
             bar.Z = 1 - p.X * l31 - p.Y * l32;
@@ -152,7 +164,12 @@ namespace Oswietlenie.ColourConfiguration
 
             //wholeArea = Heron(this.points[0], this.points[1], this.points[2]);
 
-            
+            //Obliczenie wyznaczników do metody Cramera
+            /*detPart1A = this.points[1].X * this.points[2].Y - this.points[2].X * this.points[1].Y;
+            detPart2A =  this.points[0].X * this.points[2].Y - this.points[2].X * this.points[0].Y;
+            detPart3A = this.points[0].X * this.points[1].Y - this.points[1].X * this.points[0].Y;
+            detA = detPart1A - detPart2A + detPart3A;*/
+
             //rozklad L macierzy [x1, x2, x3; y1, y2, y3; 1, 1, 1]
             row1 = new Vector3(this.points[0].X, this.points[1].X, this.points[2].X);
             l21 = this.points[0].Y / row1.X;

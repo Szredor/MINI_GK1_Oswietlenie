@@ -1,14 +1,9 @@
 ﻿using Oswietlenie.ColourConfiguration;
 using Oswietlenie.Geometric;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Numerics;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -205,7 +200,20 @@ namespace Oswietlenie
             }
         }
 
-       
+        private void numericKD_ValueChanged(object sender, EventArgs e)
+        {
+            BitmapOperator.Instance.colourModel.kd = (float)numericKD.Value;
+        }
+
+        private void numericKS_ValueChanged(object sender, EventArgs e)
+        {
+            BitmapOperator.Instance.colourModel.ks = (float)numericKS.Value;
+        }
+
+        private void numericM_ValueChanged(object sender, EventArgs e)
+        {
+            BitmapOperator.Instance.colourModel.m = (int)numericM.Value;
+        }
     }
 
     class PointMover

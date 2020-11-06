@@ -31,6 +31,13 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBoxSchemat = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBoxParameters = new System.Windows.Forms.GroupBox();
+            this.numericKS = new System.Windows.Forms.NumericUpDown();
+            this.numericKD = new System.Windows.Forms.NumericUpDown();
+            this.numericM = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBoxObjCol = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -55,6 +62,10 @@
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSchemat)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
+            this.groupBoxParameters.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericKS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericKD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericM)).BeginInit();
             this.groupBoxObjCol.SuspendLayout();
             this.groupBoxNorMap.SuspendLayout();
             this.groupBoxLightVec.SuspendLayout();
@@ -98,6 +109,7 @@
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.groupBoxParameters, 0, 5);
             this.tableLayoutPanel2.Controls.Add(this.groupBoxObjCol, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.groupBoxNorMap, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.groupBoxLightVec, 0, 2);
@@ -106,15 +118,125 @@
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(1287, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 6;
+            this.tableLayoutPanel2.RowCount = 7;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 89F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 81F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 118F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(174, 735);
             this.tableLayoutPanel2.TabIndex = 2;
+            // 
+            // groupBoxParameters
+            // 
+            this.groupBoxParameters.Controls.Add(this.numericKS);
+            this.groupBoxParameters.Controls.Add(this.numericKD);
+            this.groupBoxParameters.Controls.Add(this.numericM);
+            this.groupBoxParameters.Controls.Add(this.label6);
+            this.groupBoxParameters.Controls.Add(this.label4);
+            this.groupBoxParameters.Controls.Add(this.label3);
+            this.groupBoxParameters.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxParameters.Location = new System.Drawing.Point(3, 413);
+            this.groupBoxParameters.Name = "groupBoxParameters";
+            this.groupBoxParameters.Size = new System.Drawing.Size(168, 112);
+            this.groupBoxParameters.TabIndex = 4;
+            this.groupBoxParameters.TabStop = false;
+            this.groupBoxParameters.Text = "Parametry";
+            // 
+            // numericKS
+            // 
+            this.numericKS.DecimalPlaces = 2;
+            this.numericKS.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.numericKS.Location = new System.Drawing.Point(42, 51);
+            this.numericKS.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericKS.Name = "numericKS";
+            this.numericKS.Size = new System.Drawing.Size(120, 23);
+            this.numericKS.TabIndex = 4;
+            this.numericKS.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            this.numericKS.ValueChanged += new System.EventHandler(this.numericKS_ValueChanged);
+            // 
+            // numericKD
+            // 
+            this.numericKD.DecimalPlaces = 2;
+            this.numericKD.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
+            this.numericKD.Location = new System.Drawing.Point(42, 22);
+            this.numericKD.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericKD.Name = "numericKD";
+            this.numericKD.Size = new System.Drawing.Size(120, 23);
+            this.numericKD.TabIndex = 4;
+            this.numericKD.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            65536});
+            this.numericKD.ValueChanged += new System.EventHandler(this.numericKD_ValueChanged);
+            // 
+            // numericM
+            // 
+            this.numericM.Location = new System.Drawing.Point(42, 80);
+            this.numericM.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericM.Name = "numericM";
+            this.numericM.Size = new System.Drawing.Size(120, 23);
+            this.numericM.TabIndex = 3;
+            this.numericM.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericM.ValueChanged += new System.EventHandler(this.numericM_ValueChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(8, 82);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(18, 15);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "m";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 53);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(18, 15);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "ks";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 24);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(20, 15);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "kd";
             // 
             // groupBoxObjCol
             // 
@@ -337,6 +459,11 @@
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSchemat)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.groupBoxParameters.ResumeLayout(false);
+            this.groupBoxParameters.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericKS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericKD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericM)).EndInit();
             this.groupBoxObjCol.ResumeLayout(false);
             this.groupBoxObjCol.PerformLayout();
             this.groupBoxNorMap.ResumeLayout(false);
@@ -377,6 +504,13 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.GroupBox groupBoxParameters;
+        private System.Windows.Forms.NumericUpDown numericKD;
+        private System.Windows.Forms.NumericUpDown numericM;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown numericKS;
     }
 }
 
