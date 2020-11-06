@@ -25,13 +25,11 @@ namespace Oswietlenie.ColourConfiguration
     {
         protected readonly Vector3 V = new Vector3(0, 0, 1);
 
-        protected float cosNL;
-        protected float cosVR;
-        protected ColourData cdata;
-
         public virtual Color CalculateColour(ColourData data)
         {
-            cdata = data;
+            float cosNL;
+            float cosVR;
+
             Vector3 N = data.N;
             Vector3 L = data.L;
             cosNL = Vector3.Dot(N, L);
@@ -40,8 +38,8 @@ namespace Oswietlenie.ColourConfiguration
 
             int r, g, b;
             //Obliczenie składowej R
-            float lambert = cdata.kd * data.Il.X * data.Io.X * cosNL * 255;
-            float mirror = cdata.ks * data.Il.X * data.Io.X * cosVR * 255;
+            float lambert = data.kd * data.Il.X * data.Io.X * cosNL * 255;
+            float mirror = data.ks * data.Il.X * data.Io.X * cosVR * 255;
             int result = (int)(lambert + mirror);
             if (result < 0)
                 r = 0;
@@ -50,8 +48,8 @@ namespace Oswietlenie.ColourConfiguration
             else r = result;
 
             //Obliczenie składowej G
-            lambert = cdata.kd * data.Il.Y * data.Io.Y * cosNL * 255;
-            mirror = cdata.ks * data.Il.Y * data.Io.Y * cosVR * 255;
+            lambert = data.kd * data.Il.Y * data.Io.Y * cosNL * 255;
+            mirror = data.ks * data.Il.Y * data.Io.Y * cosVR * 255;
             result = (int)(lambert + mirror);
             if (result < 0)
                 g = 0;
@@ -60,8 +58,8 @@ namespace Oswietlenie.ColourConfiguration
             else g = result;
 
             //Obliczenie składowej B
-            lambert = cdata.kd * data.Il.Z * data.Io.Z * cosNL * 255;
-            mirror = cdata.ks * data.Il.Z * data.Io.Z * cosVR * 255;
+            lambert = data.kd * data.Il.Z * data.Io.Z * cosNL * 255;
+            mirror = data.ks * data.Il.Z * data.Io.Z * cosVR * 255;
             result = (int)(lambert + mirror);
             if (result < 0)
                 b = 0;
@@ -123,9 +121,22 @@ namespace Oswietlenie.ColourConfiguration
         public Color CalculateColour(Point p)
         {
             CalculateBaricentric(p);
-            return Color.FromArgb((int)(colorPoints[0].R * bar.X + colorPoints[1].R * bar.Y + colorPoints[2].R * bar.Z),
-                (int)(colorPoints[0].G * bar.X + colorPoints[1].G * bar.Y + colorPoints[2].G * bar.Z),
-                (int)(colorPoints[0].B * bar.X + colorPoints[1].B * bar.Y + colorPoints[2].B * bar.Z));
+            int r = (int)(colorPoints[0].R * bar.X + colorPoints[1].R * bar.Y + colorPoints[2].R * bar.Z);
+            if (r < 0)
+                r = 0;
+            else if (r > 255)
+                r = 255;
+            int g = (int)(colorPoints[0].G * bar.X + colorPoints[1].G * bar.Y + colorPoints[2].G * bar.Z);
+            if (g < 0)
+                g = 0;
+            else if (g > 255)
+                g = 255;
+            int b = (int)(colorPoints[0].B * bar.X + colorPoints[1].B * bar.Y + colorPoints[2].B * bar.Z);
+            if (b < 0)
+                b = 0;
+            else if (b > 255)
+                b = 255;
+            return Color.FromArgb(r, g, b);
         }
 
         public void SetContext((Point p, Color c)[] points)

@@ -287,7 +287,7 @@ namespace Wielokaty
 
         private const int defaultX = 500;
         private const int defaultY = 500;
-        public const int refreshTimeMs = 120;
+        public const int refreshTimeMs = 80;
 
         public const double CollideMargin = 5;
 
@@ -337,8 +337,8 @@ namespace Wielokaty
             lastRefresh.Restart();
 
             bitmap.Clear(BackgroundColor);
-            //if (!ApproxColour)
-            if (parallel)
+            if (!ApproxColour)
+            //if (parallel)
             {
                 foreach (TriangleMesh obj in meshes)
                 {

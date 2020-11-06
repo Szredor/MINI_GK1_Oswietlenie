@@ -34,7 +34,7 @@ namespace Oswietlenie.Geometric
                 for (int col = 0; col < cols - 1; ++col)
                 {
                     ts.Add(new Triangle(mesh[row, col], mesh[row + 1, col], mesh[row, col + 1]));
-                    ts.Add(new Triangle(mesh[row + 1, col + 1], mesh[row + 1, col], mesh[row, col + 1]));
+                    ts.Add(new Triangle(mesh[row + 1, col + 1], mesh[row, col + 1], mesh[row + 1, col]));
                 }
             }
 
