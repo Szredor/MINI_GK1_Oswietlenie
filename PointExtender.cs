@@ -25,6 +25,7 @@ namespace Wielokaty
             new Point((int)(A.X * cosTheta - A.Y * sinTheta), (int)(A.X * sinTheta + A.Y * cosTheta));
         public static Point Rotate(this Point A, int angle) => Rotate(A, Math.Cos(angle * Math.PI / 180), Math.Sin(angle * Math.PI / 180));
         public static double EuclideanMeasure(this Point A) => Math.Sqrt(A.X * A.X + A.Y * A.Y);
+        public static float EuclideanMeasureF(this Point A) => MathF.Sqrt(A.X * A.X + A.Y * A.Y);
         public static int EuclideanMeasureInt(this Point A) => (int)Math.Floor(EuclideanMeasure(A));
         public static (double r, double fi) ToPolar(this Point A) => (A.EuclideanMeasure(), Math.Atan2(A.Y, A.X));
         public static Point FromPolar(double r, double fi) => new Point((int)(r * Math.Cos(fi)), (int)(r * Math.Sin(fi)));

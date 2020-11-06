@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Oswietlenie.ColourConfiguration
 {
-    class LightColour
+    public class LightColour
     {
         private Vector3 colour;
 
@@ -17,7 +17,7 @@ namespace Oswietlenie.ColourConfiguration
 
         public void SetColour(Color colour)
         {
-            this.colour = new Vector3(colour.R, colour.G, colour.B);
+            this.colour = new Vector3(colour.R/255.0f, colour.G/ 255.0f, colour.B/ 255.0f);
         }
 
         public Vector3 GetLightColour()

@@ -2,6 +2,7 @@
 using Oswietlenie.Geometric;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -23,6 +24,7 @@ namespace Wielokaty
         public bool Disposed { get; private set; }
         public int Height { get; private set; }
         public int Width { get; private set; }
+        private int size;
 
         protected GCHandle BitsHandle { get; private set; }
 
@@ -30,6 +32,7 @@ namespace Wielokaty
         {
             Width = width;
             Height = height;
+            size = Width * Height;
             Bits = new Int32[width * height];
             BitsHandle = GCHandle.Alloc(Bits, GCHandleType.Pinned);
             Bitmap = new Bitmap(width, height, width * 4, PixelFormat.Format32bppPArgb, BitsHandle.AddrOfPinnedObject());
@@ -39,9 +42,7 @@ namespace Wielokaty
         {
             int index = x + (y * Width);
             int col = colour.ToArgb();
-
-            int size = Width * Height;
-            Bits[((index%size) + size) % size] = col;
+            Bits[index] = col;
         }
 
         public Color GetPixel(int x, int y)
@@ -56,7 +57,7 @@ namespace Wielokaty
         public void Clear(Color background)
         {
             int col = background.ToArgb();
-            for (int i = 0; i < Width * Height; ++i)
+            for (int i = 0; i < size; ++i)
                 Bits[i] = col;
         }
 
@@ -268,7 +269,7 @@ namespace Wielokaty
         }
     }
 
-    class BitmapOperator
+    public class BitmapOperator
     {
         private static BitmapOperator instance = null;
         public static BitmapOperator Instance 
@@ -286,7 +287,7 @@ namespace Wielokaty
 
         private const int defaultX = 500;
         private const int defaultY = 500;
-        public const int refreshTimeMs = 100;
+        public const int refreshTimeMs = 120;
 
         public const double CollideMargin = 5;
 
@@ -298,7 +299,28 @@ namespace Wielokaty
         public Color BackgroundColor { get; private set; } = Color.White;
         public Bitmap Bitmap => bitmap.Bitmap;
 
-        public ColourModel colourModel = new ColourModel();
+        private bool approxColour = false;
+        public bool ApproxColour
+        {
+            get => approxColour;
+            set
+            {
+                approxColour = value;
+                if (approxColour)
+                {
+                    var model = new ColourModelApprox();
+                    model.Clone(colourModel);
+                    colourModel = model;
+                }
+                else
+                {
+                    var model = new ColourModelAcurate();
+                    model.Clone(colourModel);
+                    colourModel = model;
+                }
+            }
+        }
+        public IColourModel colourModel;
 
         private BitmapOperator()
         {
@@ -308,17 +330,29 @@ namespace Wielokaty
             bitmap.Clear(BackgroundColor);
         }
 
-        public void DrawObjects()
+        public void DrawObjects(bool parallel = false)
         {
             if (lastRefresh?.ElapsedMilliseconds < refreshTimeMs)
                 return;
             lastRefresh.Restart();
 
             bitmap.Clear(BackgroundColor);
-            foreach (TriangleMesh obj in meshes)
+            //if (!ApproxColour)
+            if (parallel)
             {
-                obj.Fill(bitmap, colourModel);
-                obj.Draw(bitmap);
+                foreach (TriangleMesh obj in meshes)
+                {
+                    obj.FillParalell(bitmap, colourModel);
+                    obj.Draw(bitmap);
+                }
+            }
+            else
+            {
+                foreach (TriangleMesh obj in meshes)
+                {
+                    obj.Fill(bitmap, colourModel);
+                    obj.Draw(bitmap);
+                }
             }
         }
 

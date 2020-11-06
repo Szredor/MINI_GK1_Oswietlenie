@@ -6,9 +6,9 @@ using Wielokaty;
 
 namespace Oswietlenie.Geometric
 {
-    class Triangle
+    public class Triangle
     {
-        private ReferencePoint[] points = new ReferencePoint[3];
+        public ReferencePoint[] points = new ReferencePoint[3];
 
         public Triangle(ReferencePoint p1, ReferencePoint p2, ReferencePoint p3)
         {
@@ -17,10 +17,11 @@ namespace Oswietlenie.Geometric
             points[2] = p3;
         }
 
-        public void Fill(DirectBitmap bitmap, ColourModel model)
+        public void Fill(DirectBitmap bitmap, IColourModel model)
         {
             ActiveLineList aet = new ActiveLineList(points);
 
+            model.SetTriangleContext(this);
             List<Point> scanLine;
             while (aet.Increment())
             {

@@ -7,7 +7,7 @@ using Wielokaty;
 
 namespace Oswietlenie.Geometric
 {
-    class ReferencePoint
+    public class ReferencePoint
     {
         public Vector3 Position { get; set; }
         public int Size { get; set; } = 1;

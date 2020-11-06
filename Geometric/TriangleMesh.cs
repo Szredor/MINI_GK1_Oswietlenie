@@ -7,7 +7,7 @@ using Wielokaty;
 
 namespace Oswietlenie.Geometric
 {
-    class TriangleMesh: IDisposable
+    public class TriangleMesh: IDisposable
     {
         private ReferencePoint[,] mesh;
         private Triangle[] triangles;
@@ -71,11 +71,15 @@ namespace Oswietlenie.Geometric
             }
         }
 
-        public void Fill(DirectBitmap bitmap, ColourModel model)
+        public void Fill(DirectBitmap bitmap, IColourModel model)
         {
-            //Parallel.ForEach(triangles, (trian) => trian.Fill(bitmap, model));
             foreach (Triangle trian in triangles)
                 trian.Fill(bitmap, model);
+        }
+
+        public void FillParalell(DirectBitmap bitmap, IColourModel model)
+        {
+            Parallel.ForEach(triangles, (trian) => trian.Fill(bitmap, model));
         }
 
         public bool Collides(Point p, out ReferencePoint point)

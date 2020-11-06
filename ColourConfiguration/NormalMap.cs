@@ -7,12 +7,12 @@ using System.Windows.Forms;
 
 namespace Oswietlenie.ColourConfiguration
 {
-    interface INormalMap
+    public interface INormalMap
     {
         Vector3 GetNormalMap(Point p);
     }
 
-    class StaticNormalMap : INormalMap
+    public class StaticNormalMap : INormalMap
     {
         private Vector3 vec;
 
@@ -28,15 +28,28 @@ namespace Oswietlenie.ColourConfiguration
         }
     }
 
-    class TextureNormalMap : INormalMap
+    public class TextureNormalMap : INormalMap
     {
-        public Bitmap texture;
+        private Vector3[] texture;
+        private int width;
+        private int height;
 
         public TextureNormalMap(string texturePath)
         {
             try
             {
-                texture = (Bitmap)Image.FromFile(texturePath);
+                Bitmap bmp = (Bitmap)Image.FromFile(texturePath);
+                width = bmp.Width;
+                height = bmp.Height;
+                texture = new Vector3[width * height];
+                for (int y = 0; y < bmp.Height; ++y)
+                {
+                    for (int x = 0; x < width; ++x)
+                    {
+                        Color px = bmp.GetPixel(x, y);
+                        texture [y * width + x] = Vector3.Normalize(new Vector3((px.R - 128) / 255.0f, (px.G - 128) / 255.0f, (float)(px.R) / 255.0f));
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -44,19 +57,9 @@ namespace Oswietlenie.ColourConfiguration
             }
         }
 
-        private int Scale(int val, int a, int b)
-        {
-            if (val <= a)
-                return a;
-            if (val >= b)
-                return b;
-            return a + (val - a) * (b - a) / (b - a);
-        }
-
         public Vector3 GetNormalMap(Point p)
         {
-            Color col = texture.GetPixel(p.X, p.Y);
-            return new Vector3((float)(col.R - 128) / 255, (float)(col.G - 128) / 255, (float)(col.R) / 255);
+            return texture[(p.Y % height) * width + (p.X % width)];
         }
     }
 }

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oswietlenie", "Oswietlenie.csproj", "{AD0DA61D-0CA7-419F-A34C-8F8A2752F31B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oswietlenie", "Oswietlenie.csproj", "{AD0DA61D-0CA7-419F-A34C-8F8A2752F31B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateTime", "..\UpdateTime\UpdateTime.csproj", "{BEF44321-E36C-4347-8B92-DD2CC5FC803E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{AD0DA61D-0CA7-419F-A34C-8F8A2752F31B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD0DA61D-0CA7-419F-A34C-8F8A2752F31B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD0DA61D-0CA7-419F-A34C-8F8A2752F31B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEF44321-E36C-4347-8B92-DD2CC5FC803E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEF44321-E36C-4347-8B92-DD2CC5FC803E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEF44321-E36C-4347-8B92-DD2CC5FC803E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEF44321-E36C-4347-8B92-DD2CC5FC803E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

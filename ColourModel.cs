@@ -14,36 +14,129 @@ using Wielokaty;
 
 namespace Oswietlenie
 {
-    class ColourModel
+    public interface IColourModel
     {
-        public double kd { get; set; }
-        public double ks { get; set; }
+        public float kd { get; set; }
+        public float ks { get; set; }
+        public int m { get; set; }
+        public IColourObject ColourObject { get; set; }
+        public ILightVector LightVector { get; set; }
+        public LightColour LigthColor { get; set; }
+        public INormalMap NormalMap { get; set; }
+
+        public Color GetColor(Point p);
+        public void SetTriangleContext(Triangle triangle);
+        public void Clone(IColourModel other);
+    }
+
+    public class ColourModelAcurate: IColourModel
+    {
+        public float kd { get; set; }
+        public float ks { get; set; }
         public int m { get; set; }
 
         public IColourObject ColourObject { get; set; }
-        public IColourMethod ColourMethod { get; set; }
+
         public ILightVector LightVector { get; set; }
-        public LightColour LigthColour { get; set; }
+        public LightColour LigthColor { get; set; }
         public INormalMap NormalMap { get; set; }
 
+        private AcurateLambertMethod acurateMethod = new AcurateLambertMethod();
 
         public Color GetColor(Point p)
         {
-            ColourData data = new ColourData()
-            {
-                Il = this.LigthColour.GetLightColour(),
-                Io = ColourObject.GetColorObject(p),
-                L = LightVector.GetLightVector(p),
-                N = NormalMap.GetNormalMap(p),
-                kd = this.kd,
-                ks = this.ks,
-                m = this.m,
-            };
+            //return Color.Red;
+
+            ColourData data = new ColourData();
+            data.Il = this.LigthColor.GetLightColour();
+            data.Io = ColourObject.GetColorObject(p);
+            data.L = LightVector.GetLightVector(p);
+            data.N = NormalMap.GetNormalMap(p);
+            data.kd = kd;
+            data.ks = ks;
+            data.m = m;
+
             //kd * IL * IO * cos(kąt(N, L)) + ks * IL * IO * cos^m(kąt(V, R))
-            return ColourMethod.CalculateColour(data);
+            return acurateMethod.CalculateColour(data);
         }
 
+        public void SetTriangleContext(Triangle triangle)
+        { }
+
+        public void Clone(IColourModel other)
+        {
+            if (other == null)
+                return;
+
+            kd = other.kd;
+            ks = other.ks;
+            m = other.m;
+            ColourObject = other.ColourObject;
+            LightVector = other.LightVector;
+            LigthColor = other.LigthColor;
+            NormalMap = other.NormalMap;
+        }
     }
+
+    public class ColourModelApprox : IColourModel
+    {
+        public float kd { get; set; }
+        public float ks { get; set; }
+        public int m { get; set; }
+
+        public IColourObject ColourObject { get; set; }
+        public ILightVector LightVector { get; set; }
+        public LightColour LigthColor { get; set; }
+        public INormalMap NormalMap { get; set; }
+
+        private InterpolateLambertMethod approxMethod = new InterpolateLambertMethod();
+        private AcurateLambertMethod acurateMethod = new AcurateLambertMethod();
+
+        public ColourData CreateColourData(Point p)
+        {
+            ColourData data = new ColourData();
+            data.Il = this.LigthColor.GetLightColour();
+            data.Io = ColourObject.GetColorObject(p);
+            data.L = LightVector.GetLightVector(p);
+            data.N = NormalMap.GetNormalMap(p);
+            data.kd = kd;
+            data.ks = ks;
+            data.m = m;
+
+            return data;
+        }
+
+        public Color GetColor(Point p)
+        {
+             return approxMethod.CalculateColour(p);
+        }
+
+        public void SetTriangleContext(Triangle triangle)
+        {
+            (Point, Color)[] context = new (Point, Color)[]
+            {
+                (triangle.points[0], acurateMethod.CalculateColour(CreateColourData(triangle.points[0]))),
+                (triangle.points[1], acurateMethod.CalculateColour(CreateColourData(triangle.points[1]))),
+                (triangle.points[2], acurateMethod.CalculateColour(CreateColourData(triangle.points[2])))
+            };
+            approxMethod.SetContext(context);
+        }
+
+        public void Clone(IColourModel other)
+        {
+            if (other == null)
+                return;
+
+            kd = other.kd;
+            ks = other.ks;
+            m = other.m;
+            ColourObject = other.ColourObject;
+            LightVector = other.LightVector;
+            LigthColor = other.LigthColor;
+            NormalMap = other.NormalMap;
+        }
+    }
+
 
    
 
