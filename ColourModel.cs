@@ -27,6 +27,8 @@ namespace Oswietlenie
         public Color GetColor(Point p);
         public void SetTriangleContext(Triangle triangle);
         public void Clone(IColourModel other);
+
+        public IColourModel CreateCopy();
     }
 
     public class ColourModelAcurate: IColourModel
@@ -45,7 +47,6 @@ namespace Oswietlenie
 
         public Color GetColor(Point p)
         {
-            //return Color.Red;
 
             ColourData data = new ColourData();
             data.Il = this.LigthColor.GetLightColour();
@@ -76,6 +77,13 @@ namespace Oswietlenie
             LigthColor = other.LigthColor;
             NormalMap = other.NormalMap;
         }
+
+        public IColourModel CreateCopy()
+        {
+            IColourModel result = new ColourModelAcurate();
+            result.Clone(this);
+            return result;
+        }
     }
 
     public class ColourModelApprox : IColourModel
@@ -89,8 +97,15 @@ namespace Oswietlenie
         public LightColour LigthColor { get; set; }
         public INormalMap NormalMap { get; set; }
 
-        private InterpolateLambertMethod approxMethod = new InterpolateLambertMethod();
-        private AcurateLambertMethod acurateMethod = new AcurateLambertMethod();
+        private InterpolateLambertMethod approxMethod;
+        private AcurateLambertMethod acurateMethod;
+        public ColourModelApprox()
+        {
+            approxMethod = new InterpolateLambertMethod();
+            acurateMethod = new AcurateLambertMethod();
+        }
+
+        
 
         public ColourData CreateColourData(Point p)
         {
@@ -134,6 +149,13 @@ namespace Oswietlenie
             LightVector = other.LightVector;
             LigthColor = other.LigthColor;
             NormalMap = other.NormalMap;
+        }
+
+        public IColourModel CreateCopy()
+        {
+            IColourModel result = new ColourModelApprox();
+            result.Clone(this);
+            return result;
         }
     }
 

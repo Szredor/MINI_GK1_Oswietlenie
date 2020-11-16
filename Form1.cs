@@ -24,6 +24,7 @@ namespace Oswietlenie
         {
             triangleMesh?.Dispose();
             triangleMesh = new TriangleMesh(new Point(50, 50), 1180, 620, rows, cols);
+            
         }
 
         private void TestBitmap()
@@ -46,6 +47,7 @@ namespace Oswietlenie
 
             pictureBoxSchemat.Image = BitmapOperator.Instance.NewBitmap(1280, 720);
             TestBitmap();
+            BitmapOperator.Instance.SetColourModel();
             UpdateBitmap();
         }
 
@@ -94,6 +96,7 @@ namespace Oswietlenie
             {
                 button1.ForeColor = colorDialogObject.Color;
                 BitmapOperator.Instance.colourModel.ColourObject = new SolidColor(colorDialogObject.Color);
+                BitmapOperator.Instance.SetColourModel();
                 UpdateBitmap();
             }
         }
@@ -104,6 +107,7 @@ namespace Oswietlenie
             {
                 button4.ForeColor = colorDialogLight.Color;
                 BitmapOperator.Instance.colourModel.LigthColor = new LightColour(colorDialogLight.Color);
+                BitmapOperator.Instance.SetColourModel();
                 UpdateBitmap();
             }
         }
@@ -114,6 +118,7 @@ namespace Oswietlenie
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 BitmapOperator.Instance.colourModel.ColourObject = new TextureColor(openFileDialog1.FileName);
+                BitmapOperator.Instance.SetColourModel();
                 UpdateBitmap();
             }
         }
@@ -124,6 +129,7 @@ namespace Oswietlenie
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 BitmapOperator.Instance.colourModel.NormalMap = new TextureNormalMap(openFileDialog1.FileName);
+                BitmapOperator.Instance.SetColourModel();
                 UpdateBitmap();
             }
         }
@@ -133,6 +139,7 @@ namespace Oswietlenie
             if (radioButtonNMStatic.Checked)
             { 
                 BitmapOperator.Instance.colourModel.NormalMap = new StaticNormalMap(new Vector3(0, 0, 1));
+                BitmapOperator.Instance.SetColourModel();
                 button3.Enabled = false;
                 UpdateBitmap();
             }
@@ -143,7 +150,6 @@ namespace Oswietlenie
             if (radioButtonNMFile.Checked)
             {
                 button3.Enabled = true;
-                UpdateBitmap();
             }
         }
 
@@ -154,6 +160,7 @@ namespace Oswietlenie
                 TokenSrcLight.Cancel();
 
                 BitmapOperator.Instance.colourModel.LightVector = new StaticLightVector(new Vector3(0, 0, 1));
+                BitmapOperator.Instance.SetColourModel();
                 UpdateBitmap();
             }
 
@@ -164,6 +171,7 @@ namespace Oswietlenie
             if (radioButtonLightMove.Checked)
             {
                 BitmapOperator.Instance.colourModel.LightVector = new MovingLightSource(BitmapOperator.Instance.Bitmap.Width, BitmapOperator.Instance.Bitmap.Height);
+                BitmapOperator.Instance.SetColourModel();
                 UpdateBitmap();
 
                 //wystartuj asynca
@@ -196,6 +204,7 @@ namespace Oswietlenie
             if (radioButtonLightAcurate.Checked)
             {
                 BitmapOperator.Instance.ApproxColour = false;
+                BitmapOperator.Instance.SetColourModel();
                 UpdateBitmap();
             }
         }
@@ -205,6 +214,7 @@ namespace Oswietlenie
             if (radioButtonLightApprox.Checked)
             {
                 BitmapOperator.Instance.ApproxColour = true;
+                BitmapOperator.Instance.SetColourModel();
                 UpdateBitmap();
             }
         }
@@ -212,22 +222,26 @@ namespace Oswietlenie
         private void numericKD_ValueChanged(object sender, EventArgs e)
         {
             BitmapOperator.Instance.colourModel.kd = (float)numericKD.Value;
+            BitmapOperator.Instance.SetColourModel();
         }
 
         private void numericKS_ValueChanged(object sender, EventArgs e)
         {
             BitmapOperator.Instance.colourModel.ks = (float)numericKS.Value;
+            BitmapOperator.Instance.SetColourModel();
         }
 
         private void numericM_ValueChanged(object sender, EventArgs e)
         {
             BitmapOperator.Instance.colourModel.m = (int)numericM.Value;
+            BitmapOperator.Instance.SetColourModel();
         }
 
         private void numericUpDownCols_ValueChanged(object sender, EventArgs e)
         {
             cols = (int)numericUpDownCols.Value;
             CreateBitmap();
+            BitmapOperator.Instance.SetColourModel();
             UpdateBitmap();
         }
 
@@ -235,6 +249,7 @@ namespace Oswietlenie
         {
             rows = (int)numericUpDownRows.Value;
             CreateBitmap();
+            BitmapOperator.Instance.SetColourModel();
             UpdateBitmap();
         }
     }

@@ -38,6 +38,8 @@ namespace Wielokaty
             Bitmap = new Bitmap(width, height, width * 4, PixelFormat.Format32bppPArgb, BitsHandle.AddrOfPinnedObject());
         }
 
+        
+
         public void SetPixel(int x, int y, Color colour)
         {
             int index = x + (y * Width);
@@ -330,6 +332,12 @@ namespace Wielokaty
             bitmap.Clear(BackgroundColor);
         }
 
+        public void SetColourModel()
+        {
+            foreach (TriangleMesh mesh in meshes)
+                mesh.SetColourModel(colourModel);
+        }
+
         public void DrawObjects(bool parallel = false)
         {
             if (lastRefresh?.ElapsedMilliseconds < refreshTimeMs)
@@ -337,22 +345,10 @@ namespace Wielokaty
             lastRefresh.Restart();
 
             bitmap.Clear(BackgroundColor);
-            if (!ApproxColour)
-            //if (parallel)
+            foreach (TriangleMesh obj in meshes)
             {
-                foreach (TriangleMesh obj in meshes)
-                {
-                    obj.FillParalell(bitmap, colourModel);
-                    obj.Draw(bitmap);
-                }
-            }
-            else
-            {
-                foreach (TriangleMesh obj in meshes)
-                {
-                    obj.Fill(bitmap, colourModel);
-                    obj.Draw(bitmap);
-                }
+                obj.FillParalell(bitmap, colourModel);
+                obj.Draw(bitmap);
             }
         }
 

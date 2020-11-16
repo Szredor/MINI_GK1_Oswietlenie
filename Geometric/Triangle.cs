@@ -8,7 +8,10 @@ namespace Oswietlenie.Geometric
 {
     public class Triangle
     {
+        private static int id_counter = 1;
+        public readonly int id = ++id_counter;
         public ReferencePoint[] points = new ReferencePoint[3];
+        public IColourModel colourModel;
 
         public Triangle(ReferencePoint p1, ReferencePoint p2, ReferencePoint p3)
         {
@@ -17,11 +20,16 @@ namespace Oswietlenie.Geometric
             points[2] = p3;
         }
 
+        public void SetColourModel(IColourModel model)
+        {   
+            colourModel = model.CreateCopy();
+            colourModel.SetTriangleContext(this);
+        }
+
         public void Fill(DirectBitmap bitmap, IColourModel model)
         {
             ActiveLineList aet = new ActiveLineList(points);
 
-            model.SetTriangleContext(this);
             List<Point> scanLine;
             while (aet.Increment())
             {
@@ -33,7 +41,7 @@ namespace Oswietlenie.Geometric
                     it.MoveNext();
                     Point two = it.Current;
                     for (int x = one.X; x <= two.X; ++x)
-                        bitmap.SetPixel(x, one.Y, model.GetColor(new Point(x, one.Y)));
+                        bitmap.SetPixel(x, one.Y, colourModel.GetColor(new Point(x, one.Y)));
                 }
             }
         }

@@ -71,6 +71,12 @@ namespace Oswietlenie.Geometric
             }
         }
 
+        public void SetColourModel(IColourModel model)
+        {
+            foreach (Triangle trian in triangles)
+                trian.SetColourModel(model);
+        }
+
         public void Fill(DirectBitmap bitmap, IColourModel model)
         {
             foreach (Triangle trian in triangles)
