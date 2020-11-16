@@ -40,7 +40,7 @@ namespace Oswietlenie.ColourConfiguration
         private const float maxT = 100;
         private const float minT = 50;
         
-        public static int updateInterval = 150;
+        public static int updateInterval = 50;
         private bool ascending = true;
         private float t = 80;
         private Vector3 offset;

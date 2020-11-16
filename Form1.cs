@@ -3,6 +3,7 @@ using Oswietlenie.Geometric;
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -117,6 +118,8 @@ namespace Oswietlenie
 
         private void button2_Click(object sender, EventArgs e)
         {
+            string path = Directory.GetCurrentDirectory() + "\\Images\\Textures";
+            openFileDialog1.InitialDirectory = path;
             openFileDialog1.Filter = "PNG files(*.png)| *.png|BMP files(*.bmp)| *.bmp|GIF files(*.gif)| *.gif|JPEG files(*.jpeg)| *.jpeg|TIFF files(*.tiff)| *.tiff";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -128,10 +131,13 @@ namespace Oswietlenie
 
         private void button3_Click(object sender, EventArgs e)
         {
-            openFileDialog1.Filter = openFileDialog1.Filter = "PNG files(*.png)| *.png|BMP files(*.bmp)| *.bmp|GIF files(*.gif)| *.gif|JPEG files(*.jpeg)| *.jpeg|TIFF files(*.tiff)| *.tiff";
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            string path = Directory.GetCurrentDirectory() + "\\Images\\NormalMaps";
+            if (Directory.Exists(path))
+                openFileDialog2.InitialDirectory = path;
+            openFileDialog2.Filter = openFileDialog2.Filter = "PNG files(*.png)| *.png|BMP files(*.bmp)| *.bmp|GIF files(*.gif)| *.gif|JPEG files(*.jpeg)| *.jpeg|TIFF files(*.tiff)| *.tiff";
+            if (openFileDialog2.ShowDialog() == DialogResult.OK)
             {
-                BitmapOperator.Instance.colourModel.NormalMap = new TextureNormalMap(openFileDialog1.FileName);
+                BitmapOperator.Instance.colourModel.NormalMap = new TextureNormalMap(openFileDialog2.FileName);
                 BitmapOperator.Instance.SetColourModel();
                 UpdateBitmap();
             }

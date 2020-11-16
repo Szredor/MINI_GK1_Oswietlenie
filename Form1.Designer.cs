@@ -64,6 +64,7 @@
             this.colorDialogObject = new System.Windows.Forms.ColorDialog();
             this.colorDialogLight = new System.Windows.Forms.ColorDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSchemat)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
@@ -523,6 +524,12 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.InitialDirectory = ".\\Images\\Textures\\";
+            // 
+            // openFileDialog2
+            // 
+            this.openFileDialog2.FileName = "openFileDialog2";
+            this.openFileDialog2.InitialDirectory = ".\\Images\\NormalMaps\\";
             // 
             // Form1
             // 
@@ -598,6 +605,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownCols;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.OpenFileDialog openFileDialog2;
     }
 }
 

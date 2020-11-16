@@ -22,11 +22,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Images\Textures\" />
+    <Folder Include="Images\NormalMaps\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MathNet.Numerics" Version="4.12.0" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="XCOPY &quot;$(SolutionDir)Images&quot; &quot;$(TargetDir)\Images\&quot; /S /Y" />
+  </Target>
 
 </Project>
