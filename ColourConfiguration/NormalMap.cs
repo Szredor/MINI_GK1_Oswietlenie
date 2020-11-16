@@ -47,7 +47,7 @@ namespace Oswietlenie.ColourConfiguration
                     for (int x = 0; x < width; ++x)
                     {
                         Color px = bmp.GetPixel(x, y);
-                        texture [y * width + x] = Vector3.Normalize(new Vector3((px.R - 128) / 255.0f, (px.G - 128) / 255.0f, (float)(px.R) / 255.0f));
+                        texture [y * width + x] = Vector3.Normalize(new Vector3((px.R - 128) / 255.0f, (px.G - 128) / 255.0f, (px.B) / 255.0f));
                     }
                 }
             }

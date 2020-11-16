@@ -16,10 +16,19 @@ namespace Oswietlenie
         private PointMover mover;
         private CancellationTokenSource TokenSrcLight = new CancellationTokenSource();
         private object UpdateLock = new object();
+        private int cols = 10;
+        private int rows = 10;
+        TriangleMesh triangleMesh;
+
+        private void CreateBitmap()
+        {
+            triangleMesh?.Dispose();
+            triangleMesh = new TriangleMesh(new Point(50, 50), 1180, 620, rows, cols);
+        }
 
         private void TestBitmap()
         {
-            var test = new TriangleMesh(new Point(100, 100), 700, 500, 6, 9);
+            CreateBitmap();
 
             BitmapOperator.Instance.ApproxColour = false;
             BitmapOperator.Instance.colourModel.kd = 0.5f;
@@ -213,6 +222,20 @@ namespace Oswietlenie
         private void numericM_ValueChanged(object sender, EventArgs e)
         {
             BitmapOperator.Instance.colourModel.m = (int)numericM.Value;
+        }
+
+        private void numericUpDownCols_ValueChanged(object sender, EventArgs e)
+        {
+            cols = (int)numericUpDownCols.Value;
+            CreateBitmap();
+            UpdateBitmap();
+        }
+
+        private void numericUpDownRows_ValueChanged(object sender, EventArgs e)
+        {
+            rows = (int)numericUpDownRows.Value;
+            CreateBitmap();
+            UpdateBitmap();
         }
     }
 

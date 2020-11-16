@@ -54,7 +54,7 @@ namespace Oswietlenie.ColourConfiguration
 
         public Vector3 GetLightVector(Point p)
         {
-            return Vector3.Normalize(new Vector3(lightPos.X - p.X, lightPos.Y - p.Y, lightPos.Z));
+            return Vector3.Normalize(new Vector3(lightPos.X - p.X, p.Y - lightPos.Y, lightPos.Z));
         }
 
         public void UpdateLight()

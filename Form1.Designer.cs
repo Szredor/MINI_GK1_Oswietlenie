@@ -56,6 +56,11 @@
             this.groupBoxColorMethod = new System.Windows.Forms.GroupBox();
             this.radioButtonLightAcurate = new System.Windows.Forms.RadioButton();
             this.radioButtonLightApprox = new System.Windows.Forms.RadioButton();
+            this.groupBoxMesh = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.numericUpDownRows = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownCols = new System.Windows.Forms.NumericUpDown();
             this.colorDialogObject = new System.Windows.Forms.ColorDialog();
             this.colorDialogLight = new System.Windows.Forms.ColorDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -71,6 +76,9 @@
             this.groupBoxLightVec.SuspendLayout();
             this.groupBoxLightMove.SuspendLayout();
             this.groupBoxColorMethod.SuspendLayout();
+            this.groupBoxMesh.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRows)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCols)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -115,16 +123,18 @@
             this.tableLayoutPanel2.Controls.Add(this.groupBoxLightVec, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.groupBoxLightMove, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.groupBoxColorMethod, 0, 4);
+            this.tableLayoutPanel2.Controls.Add(this.groupBoxMesh, 0, 6);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(1287, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 7;
+            this.tableLayoutPanel2.RowCount = 8;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 89F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 81F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 118F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 91F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(174, 735);
             this.tableLayoutPanel2.TabIndex = 2;
@@ -442,6 +452,74 @@
             this.radioButtonLightApprox.UseVisualStyleBackColor = true;
             this.radioButtonLightApprox.CheckedChanged += new System.EventHandler(this.radioButtonLightApprox_CheckedChanged);
             // 
+            // groupBoxMesh
+            // 
+            this.groupBoxMesh.Controls.Add(this.label8);
+            this.groupBoxMesh.Controls.Add(this.label7);
+            this.groupBoxMesh.Controls.Add(this.numericUpDownRows);
+            this.groupBoxMesh.Controls.Add(this.numericUpDownCols);
+            this.groupBoxMesh.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxMesh.Location = new System.Drawing.Point(3, 531);
+            this.groupBoxMesh.Name = "groupBoxMesh";
+            this.groupBoxMesh.Size = new System.Drawing.Size(168, 85);
+            this.groupBoxMesh.TabIndex = 5;
+            this.groupBoxMesh.TabStop = false;
+            this.groupBoxMesh.Text = "Siatka";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 24);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(54, 15);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "kolumny";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(8, 53);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(45, 15);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "wiersze";
+            // 
+            // numericUpDownRows
+            // 
+            this.numericUpDownRows.Location = new System.Drawing.Point(68, 51);
+            this.numericUpDownRows.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDownRows.Name = "numericUpDownRows";
+            this.numericUpDownRows.Size = new System.Drawing.Size(94, 23);
+            this.numericUpDownRows.TabIndex = 1;
+            this.numericUpDownRows.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownRows.ValueChanged += new System.EventHandler(this.numericUpDownRows_ValueChanged);
+            // 
+            // numericUpDownCols
+            // 
+            this.numericUpDownCols.Location = new System.Drawing.Point(68, 22);
+            this.numericUpDownCols.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDownCols.Name = "numericUpDownCols";
+            this.numericUpDownCols.Size = new System.Drawing.Size(94, 23);
+            this.numericUpDownCols.TabIndex = 0;
+            this.numericUpDownCols.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownCols.ValueChanged += new System.EventHandler(this.numericUpDownCols_ValueChanged);
+            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
@@ -474,6 +552,10 @@
             this.groupBoxLightMove.PerformLayout();
             this.groupBoxColorMethod.ResumeLayout(false);
             this.groupBoxColorMethod.PerformLayout();
+            this.groupBoxMesh.ResumeLayout(false);
+            this.groupBoxMesh.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRows)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCols)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -511,6 +593,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericKS;
+        private System.Windows.Forms.GroupBox groupBoxMesh;
+        private System.Windows.Forms.NumericUpDown numericUpDownRows;
+        private System.Windows.Forms.NumericUpDown numericUpDownCols;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
     }
 }
 

@@ -32,7 +32,9 @@ namespace Oswietlenie.ColourConfiguration
             Vector3 L = data.L;
             cosNL = Vector3.Dot(N, L);
             float mulitplier = cosNL * 2;
-            cosVR = (float)Math.Pow(2 * cosNL * N.Z - L.Z, data.m);//Wynikiem <V, R> bedzie zawsze ostania współrzedna R, ponieważ, V = [0, 0, 1];
+            Vector3 R = new Vector3(2 * cosNL * N.X - L.X, 2 * cosNL * N.Y - L.Y, 2 * cosNL * N.Z - L.Z);
+            //cosVR = (float)Math.Pow(2 * cosNL * N.Z - L.Z, data.m);//Wynikiem <V, R> bedzie zawsze ostania współrzedna R, ponieważ, V = [0, 0, 1];
+            cosVR = (float)Math.Pow(Vector3.Normalize(R).Z, data.m);//Wynikiem <V, R> bedzie zawsze ostania współrzedna R, ponieważ, V = [0, 0, 1];
 
             int r, g, b;
             //Obliczenie składowej R
