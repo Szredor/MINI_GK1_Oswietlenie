@@ -289,9 +289,12 @@ namespace Wielokaty
 
         private const int defaultX = 500;
         private const int defaultY = 500;
-        public const int refreshTimeMs = 80;
+        public const int refreshTimeMs = 20;
 
         public const double CollideMargin = 5;
+
+        private bool isUpdating = false;
+        public bool IsReadyToUpdate => lastRefresh?.ElapsedMilliseconds > refreshTimeMs && !isUpdating;
 
         //double buffer?
         public DirectBitmap bitmap;
@@ -340,17 +343,19 @@ namespace Wielokaty
 
         public void DrawObjects(bool parallel = false)
         {
-            if (lastRefresh?.ElapsedMilliseconds < refreshTimeMs)
-                return;
-            lastRefresh.Restart();
-
+            if (IsReadyToUpdate)
+            
+            isUpdating = true;
             bitmap.Clear(BackgroundColor);
             foreach (TriangleMesh obj in meshes)
             {
                 obj.FillParalell(bitmap, colourModel);
                 obj.Draw(bitmap);
             }
+            isUpdating = false;
+            lastRefresh.Restart();
         }
+
 
         public Bitmap NewBitmap(int x, int y)
         {

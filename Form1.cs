@@ -56,8 +56,11 @@ namespace Oswietlenie
             Monitor.Enter(UpdateLock);
             try
             {
-                BitmapOperator.Instance.DrawObjects();
-                pictureBoxSchemat.Invalidate();
+                if (BitmapOperator.Instance.IsReadyToUpdate)
+                {
+                    BitmapOperator.Instance.DrawObjects();
+                    pictureBoxSchemat.Invalidate();
+                }
             }
             finally
             {
@@ -189,6 +192,8 @@ namespace Oswietlenie
                     break;
 
                 BitmapOperator.Instance.colourModel.LightVector.UpdateLight();
+                //Z jakiegos powodu przy kopiowaniu przyblizonego sposobu rysowania zle wykonuje sie kopia ILightVector i trzeba ciagle rozsylac nowe wersje po odswiezeniu.
+                BitmapOperator.Instance.SetColourModel();
 
                 if (Monitor.TryEnter(UpdateLock))
                 {
