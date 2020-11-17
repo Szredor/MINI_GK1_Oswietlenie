@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Numerics;
 using System.Text;
 using System.Windows.Forms;
+using Wielokaty;
 
 namespace Oswietlenie.ColourConfiguration
 {
@@ -60,6 +61,29 @@ namespace Oswietlenie.ColourConfiguration
         public Vector3 GetNormalMap(Point p)
         {
             return texture[(p.Y % height) * width + (p.X % width)];
+        }
+    }
+
+    public class WaveNormalMap : INormalMap
+    {
+        private int x0;
+        private int y0;
+
+        public WaveNormalMap(int width, int height)
+        {
+            x0 = width / 2;
+            y0 = height / 2;
+        }
+
+        public Vector3 GetNormalMap(Point p)
+        {
+            float x = (p.X - x0) / BitmapOperator.Instance.WaveDistance;
+            float y = (p.Y - y0) / BitmapOperator.Instance.WaveDistance;
+
+            double part1 = Math.Sqrt(x * x + y * y);
+            double part2 = Math.Cos(part1) / part1 ;
+
+            return Vector3.Normalize(new Vector3((float)(-part2 * x), (float)(-part2 * y), 1));
         }
     }
 }

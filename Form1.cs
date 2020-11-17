@@ -38,7 +38,8 @@ namespace Oswietlenie
             BitmapOperator.Instance.colourModel.m = 5;
             BitmapOperator.Instance.colourModel.LightVector = new StaticLightVector(new Vector3(0, 0, 1));
             BitmapOperator.Instance.colourModel.LigthColor = new LightColour(Color.White);
-            BitmapOperator.Instance.colourModel.NormalMap = new StaticNormalMap(new Vector3(0, 0, 1));
+            //BitmapOperator.Instance.colourModel.NormalMap = new StaticNormalMap(new Vector3(0, 0, 1));
+            BitmapOperator.Instance.colourModel.NormalMap = new WaveNormalMap(BitmapOperator.Instance.bitmap.Width, BitmapOperator.Instance.bitmap.Height);
             BitmapOperator.Instance.colourModel.ColourObject = new SolidColor(Color.Red);
         }
 
@@ -234,18 +235,21 @@ namespace Oswietlenie
         {
             BitmapOperator.Instance.colourModel.kd = (float)numericKD.Value;
             BitmapOperator.Instance.SetColourModel();
+            UpdateBitmap();
         }
 
         private void numericKS_ValueChanged(object sender, EventArgs e)
         {
             BitmapOperator.Instance.colourModel.ks = (float)numericKS.Value;
             BitmapOperator.Instance.SetColourModel();
+            UpdateBitmap();
         }
 
         private void numericM_ValueChanged(object sender, EventArgs e)
         {
             BitmapOperator.Instance.colourModel.m = (int)numericM.Value;
             BitmapOperator.Instance.SetColourModel();
+            UpdateBitmap();
         }
 
         private void numericUpDownCols_ValueChanged(object sender, EventArgs e)
