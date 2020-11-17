@@ -77,12 +77,14 @@ namespace Oswietlenie.ColourConfiguration
 
         public Vector3 GetNormalMap(Point p)
         {
+            //Obliczam pochodna funkcji f(x,y) = cos(srqt(x^2 + y^2))
             float x = (p.X - x0) / BitmapOperator.Instance.WaveDistance;
             float y = (p.Y - y0) / BitmapOperator.Instance.WaveDistance;
 
             double part1 = Math.Sqrt(x * x + y * y);
             double part2 = Math.Cos(part1) / part1 ;
 
+            //N = ||(-df/dx, -df/dy, 1)||
             return Vector3.Normalize(new Vector3((float)(-part2 * x), (float)(-part2 * y), 1));
         }
     }
