@@ -32,6 +32,9 @@
             this.pictureBoxSchemat = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBoxParameters = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.numericUpDownWave = new System.Windows.Forms.NumericUpDown();
             this.numericKS = new System.Windows.Forms.NumericUpDown();
             this.numericKD = new System.Windows.Forms.NumericUpDown();
             this.numericM = new System.Windows.Forms.NumericUpDown();
@@ -44,6 +47,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBoxNorMap = new System.Windows.Forms.GroupBox();
+            this.radioWaveNM = new System.Windows.Forms.RadioButton();
             this.button3 = new System.Windows.Forms.Button();
             this.radioButtonNMFile = new System.Windows.Forms.RadioButton();
             this.radioButtonNMStatic = new System.Windows.Forms.RadioButton();
@@ -69,6 +73,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSchemat)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBoxParameters.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWave)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericKS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericKD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericM)).BeginInit();
@@ -130,18 +135,21 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 8;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 89F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 81F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 118F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 91F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 108F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 82F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 83F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 151F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 94F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(174, 735);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
             // groupBoxParameters
             // 
+            this.groupBoxParameters.Controls.Add(this.label10);
+            this.groupBoxParameters.Controls.Add(this.label9);
+            this.groupBoxParameters.Controls.Add(this.numericUpDownWave);
             this.groupBoxParameters.Controls.Add(this.numericKS);
             this.groupBoxParameters.Controls.Add(this.numericKD);
             this.groupBoxParameters.Controls.Add(this.numericM);
@@ -149,12 +157,48 @@
             this.groupBoxParameters.Controls.Add(this.label4);
             this.groupBoxParameters.Controls.Add(this.label3);
             this.groupBoxParameters.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxParameters.Location = new System.Drawing.Point(3, 413);
+            this.groupBoxParameters.Location = new System.Drawing.Point(3, 431);
             this.groupBoxParameters.Name = "groupBoxParameters";
-            this.groupBoxParameters.Size = new System.Drawing.Size(168, 112);
+            this.groupBoxParameters.Size = new System.Drawing.Size(168, 145);
             this.groupBoxParameters.TabIndex = 4;
             this.groupBoxParameters.TabStop = false;
             this.groupBoxParameters.Text = "Parametry";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 111);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(26, 15);
+            this.label10.TabIndex = 7;
+            this.label10.Text = "fala";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(-39, 110);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(38, 15);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "label9";
+            // 
+            // numericUpDownWave
+            // 
+            this.numericUpDownWave.Location = new System.Drawing.Point(42, 109);
+            this.numericUpDownWave.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownWave.Name = "numericUpDownWave";
+            this.numericUpDownWave.Size = new System.Drawing.Size(120, 23);
+            this.numericUpDownWave.TabIndex = 5;
+            this.numericUpDownWave.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownWave.ValueChanged += new System.EventHandler(this.numericUpDownWave_ValueChanged);
             // 
             // numericKS
             // 
@@ -303,16 +347,29 @@
             // 
             // groupBoxNorMap
             // 
+            this.groupBoxNorMap.Controls.Add(this.radioWaveNM);
             this.groupBoxNorMap.Controls.Add(this.button3);
             this.groupBoxNorMap.Controls.Add(this.radioButtonNMFile);
             this.groupBoxNorMap.Controls.Add(this.radioButtonNMStatic);
             this.groupBoxNorMap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxNorMap.Location = new System.Drawing.Point(3, 103);
             this.groupBoxNorMap.Name = "groupBoxNorMap";
-            this.groupBoxNorMap.Size = new System.Drawing.Size(168, 83);
+            this.groupBoxNorMap.Size = new System.Drawing.Size(168, 102);
             this.groupBoxNorMap.TabIndex = 1;
             this.groupBoxNorMap.TabStop = false;
             this.groupBoxNorMap.Text = "Normal Map";
+            // 
+            // radioWaveNM
+            // 
+            this.radioWaveNM.AutoSize = true;
+            this.radioWaveNM.Location = new System.Drawing.Point(7, 73);
+            this.radioWaveNM.Name = "radioWaveNM";
+            this.radioWaveNM.Size = new System.Drawing.Size(74, 19);
+            this.radioWaveNM.TabIndex = 5;
+            this.radioWaveNM.TabStop = true;
+            this.radioWaveNM.Text = "Mapa fali";
+            this.radioWaveNM.UseVisualStyleBackColor = true;
+            this.radioWaveNM.CheckedChanged += new System.EventHandler(this.radioWaveNM_CheckedChanged);
             // 
             // button3
             // 
@@ -355,9 +412,9 @@
             this.groupBoxLightVec.Controls.Add(this.button4);
             this.groupBoxLightVec.Controls.Add(this.label5);
             this.groupBoxLightVec.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxLightVec.Location = new System.Drawing.Point(3, 192);
+            this.groupBoxLightVec.Location = new System.Drawing.Point(3, 211);
             this.groupBoxLightVec.Name = "groupBoxLightVec";
-            this.groupBoxLightVec.Size = new System.Drawing.Size(168, 54);
+            this.groupBoxLightVec.Size = new System.Drawing.Size(168, 49);
             this.groupBoxLightVec.TabIndex = 2;
             this.groupBoxLightVec.TabStop = false;
             this.groupBoxLightVec.Text = "Kolor światła";
@@ -386,9 +443,9 @@
             this.groupBoxLightMove.Controls.Add(this.radioButtonLightStatic);
             this.groupBoxLightMove.Controls.Add(this.radioButtonLightMove);
             this.groupBoxLightMove.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxLightMove.Location = new System.Drawing.Point(3, 252);
+            this.groupBoxLightMove.Location = new System.Drawing.Point(3, 266);
             this.groupBoxLightMove.Name = "groupBoxLightMove";
-            this.groupBoxLightMove.Size = new System.Drawing.Size(168, 74);
+            this.groupBoxLightMove.Size = new System.Drawing.Size(168, 76);
             this.groupBoxLightMove.TabIndex = 3;
             this.groupBoxLightMove.TabStop = false;
             this.groupBoxLightMove.Text = "Zachowanie światła";
@@ -422,9 +479,9 @@
             this.groupBoxColorMethod.Controls.Add(this.radioButtonLightAcurate);
             this.groupBoxColorMethod.Controls.Add(this.radioButtonLightApprox);
             this.groupBoxColorMethod.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxColorMethod.Location = new System.Drawing.Point(3, 332);
+            this.groupBoxColorMethod.Location = new System.Drawing.Point(3, 348);
             this.groupBoxColorMethod.Name = "groupBoxColorMethod";
-            this.groupBoxColorMethod.Size = new System.Drawing.Size(168, 75);
+            this.groupBoxColorMethod.Size = new System.Drawing.Size(168, 77);
             this.groupBoxColorMethod.TabIndex = 4;
             this.groupBoxColorMethod.TabStop = false;
             this.groupBoxColorMethod.Text = "Model oświetlenia";
@@ -460,9 +517,9 @@
             this.groupBoxMesh.Controls.Add(this.numericUpDownRows);
             this.groupBoxMesh.Controls.Add(this.numericUpDownCols);
             this.groupBoxMesh.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxMesh.Location = new System.Drawing.Point(3, 531);
+            this.groupBoxMesh.Location = new System.Drawing.Point(3, 582);
             this.groupBoxMesh.Name = "groupBoxMesh";
-            this.groupBoxMesh.Size = new System.Drawing.Size(168, 85);
+            this.groupBoxMesh.Size = new System.Drawing.Size(168, 88);
             this.groupBoxMesh.TabIndex = 5;
             this.groupBoxMesh.TabStop = false;
             this.groupBoxMesh.Text = "Siatka";
@@ -546,6 +603,7 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.groupBoxParameters.ResumeLayout(false);
             this.groupBoxParameters.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWave)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericKS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericKD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericM)).EndInit();
@@ -606,6 +664,10 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.OpenFileDialog openFileDialog2;
+        private System.Windows.Forms.NumericUpDown numericUpDownWave;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.RadioButton radioWaveNM;
     }
 }
 

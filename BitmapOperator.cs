@@ -292,7 +292,7 @@ namespace Wielokaty
         public const int refreshTimeMs = 20;
 
         public const double CollideMargin = 5;
-        public float WaveDistance { get; set; } = 5;
+        public float WaveDistance { get; set; } = 10;
 
         private bool isUpdating = false;
         public bool IsReadyToUpdate => lastRefresh?.ElapsedMilliseconds > refreshTimeMs && !isUpdating;
