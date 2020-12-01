@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oswietlenie", "Oswietlenie.csproj", "{AD0DA61D-0CA7-419F-A34C-8F8A2752F31B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateTime", "..\UpdateTime\UpdateTime.csproj", "{BEF44321-E36C-4347-8B92-DD2CC5FC803E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateTime", "UpdateTime\UpdateTime.csproj", "{BEF44321-E36C-4347-8B92-DD2CC5FC803E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
