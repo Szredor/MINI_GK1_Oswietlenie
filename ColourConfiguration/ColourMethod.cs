@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
-using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Factorization;
 
 namespace Oswietlenie.ColourConfiguration
 {

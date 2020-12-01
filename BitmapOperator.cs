@@ -342,7 +342,7 @@ namespace Wielokaty
                 mesh.SetColourModel(colourModel);
         }
 
-        public void DrawObjects(bool parallel = false)
+        public void DrawObjects(bool parallel = true)
         {
             if (IsReadyToUpdate)
             
@@ -350,7 +350,10 @@ namespace Wielokaty
             bitmap.Clear(BackgroundColor);
             foreach (TriangleMesh obj in meshes)
             {
-                obj.FillParalell(bitmap, colourModel);
+                if (parallel)
+                    obj.FillParalell(bitmap, colourModel);
+                else
+                    obj.Fill(bitmap, colourModel);
                 obj.Draw(bitmap);
             }
             isUpdating = false;
